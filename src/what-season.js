@@ -32,10 +32,17 @@ function getSeason(date) {
   // remove line with error and write your code here
   if (date === undefined) return 'Unable to determine the time of year!';
   if (!(date instanceof Date)) throw new Error('Invalid date!');
+  if (Object.prototype.toString.call(date) !== '[object Date]') throw new Error('Invalid date!');
+  try {
+    date.toLocaleString();
+  } catch (error) {
+    if (error) throw new Error('Invalid date!');
+  }
+
   const month = date.getMonth() + 1;
   const day = date.getDay();
-  const countDays = monthsDaysCount[month];
-  if (day > countDays) throw new Error('Invalid date!');
+  // const countDays = monthsDaysCount[month];
+  // if (day > countDays) throw new Error('Invalid date!');
   if (month < 3 || month === 12) return 'winter';
   if (month >= 3 && month < 6) return 'spring';
   if (month >= 6 && month < 9) return 'summer';
